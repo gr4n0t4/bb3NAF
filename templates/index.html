@@ -1,0 +1,85 @@
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    .clasificado {
+        color: green;
+    }
+    h1 {
+        text-align: center;
+        font-family: arial, sans-serif;
+
+    }
+    </style>
+<h1>{{ titulo }}</h1>
+</br>
+</br>
+
+{% if resultados %}
+
+    <table>
+        <caption>Clasificacion</caption>
+
+        <tr>
+            <th>Posicion</th>
+            <th>Entrenador ({{ num_entrenadores }})</th>
+            <th>Equipo</th>
+            <th>Partidos Jugados</th>
+            <th>Record (V-E-D)</th>
+            <th>TD (F/C)</th>
+            <th>CAS (F/C)</th>
+            <th>Win Rate</th>
+        <tr>
+
+        {% for entrenador in entrenadores %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entrenador.entrenador }}</td>
+                <td>{{ entrenador.nombre }}</td>
+                <td>{{ entrenador.total }}</td>
+                <td>{{ entrenador.victorias }} - {{ entrenador.empates }} - {{ entrenador.derrotas }}</td>
+                <td>{{ entrenador.td_favor }}/{{ entrenador.td_contra }}</td>
+                <td>{{ entrenador.cas_favor }}/{{ entrenador.cas_contra }}</td>
+                <td>{{ entrenador.puntos }}</td>
+            </tr>            
+        {% endfor %}
+    </table>
+    </br>
+    </br>
+
+    <table>
+        <caption>Resultados</caption>
+
+        <tr>
+            <th>Entrenador Casa</th>
+            <th>TD Casa (CAS)</th>
+            <th>TD Fuera (CAS)</th>
+            <th>Entrenador Fuera</th>
+        <tr>
+
+        {% for resultado in resultados %}
+            <tr>
+                <td>{{ resultado.entrenador_casa }}</td>
+                <td><b>{{ resultado.td_casa }}</b> ({{ resultado.cas_casa }})</td>
+                <td><b>{{ resultado.td_fuera }}</b> ({{ resultado.cas_fuera }})</td>
+                <td>{{ resultado.entrenador_fuera }}</td>
+                
+            </tr>            
+        {% endfor %}
+    </table>
+    
+{% else %}
+    <p>No hay resultados</p>
+{% endif %}
