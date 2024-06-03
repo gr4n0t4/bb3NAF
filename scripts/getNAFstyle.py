@@ -41,42 +41,33 @@ for i in range(delta.days + 1):
         if match['teams'][0]['idteamlisting'] not in all_teams:
             all_teams[entrenador_casa] = {'nombre': str(match['teams'][0]['teamname']),
                                                 'entrenador' : str(match['coaches'][0]['coachname']),
-                                                'total': 0,
                                                 'victorias': 0,
                                                 'empates': 0,
                                                 'derrotas': 0,
                                                 'puntos': 150,
                                                 'td_favor': 0,
                                                 'td_contra': 0,
-                                                'td_dif': 0,
                                                 'cas_favor': 0,
                                                 'cas_contra': 0,
-                                                'cas_dif': 0,
                                                 }
         # Away
         if match['teams'][1]['idteamlisting'] not in all_teams:
             all_teams[entrenador_fuera] = {'nombre': str(match['teams'][1]['teamname']),
                                                 'entrenador' : str(match['coaches'][1]['coachname']),
-                                                'total': 0,
                                                 'victorias': 0,
                                                 'empates': 0,
                                                 'derrotas': 0,
                                                 'puntos': 150,
                                                 'td_favor': 0,
                                                 'td_contra': 0,
-                                                'td_dif': 0,
                                                 'cas_favor': 0,
                                                 'cas_contra': 0,
-                                                'cas_dif': 0
                                                 }
-        all_teams[entrenador_casa]['total']+=1
         all_teams[entrenador_casa]['td_favor']+=match['teams'][0]['score']
         all_teams[entrenador_casa]['td_contra']+=match['teams'][1]['score']
-        all_teams[entrenador_casa]['td_dif']+=match['teams'][0]['score']-match['teams'][1]['score']
 
         all_teams[entrenador_casa]['cas_favor']+=match['teams'][0]['inflictedcasualties']
         all_teams[entrenador_casa]['cas_contra']+=match['teams'][1]['inflictedcasualties']
-        all_teams[entrenador_casa]['cas_dif']+=match['teams'][0]['inflictedcasualties']-match['teams'][1]['inflictedcasualties']
         scoring_points_casa = 0
         if match['teams'][0]['score'] == match['teams'][1]['score']:
             all_teams[entrenador_casa]['empates']+=1
@@ -90,14 +81,11 @@ for i in range(delta.days + 1):
 
 
 
-        all_teams[entrenador_fuera]['total']+=1
         all_teams[entrenador_fuera]['td_favor']+=match['teams'][1]['score']
         all_teams[entrenador_fuera]['td_contra']+=match['teams'][0]['score']
-        all_teams[entrenador_fuera]['td_dif']+=match['teams'][1]['score']-match['teams'][0]['score']
 
         all_teams[entrenador_fuera]['cas_favor']+=match['teams'][1]['inflictedcasualties']
         all_teams[entrenador_fuera]['cas_contra']+=match['teams'][0]['inflictedcasualties'] 
-        all_teams[entrenador_fuera]['cas_dif']+=match['teams'][1]['inflictedcasualties']-match['teams'][0]['inflictedcasualties']
         
         scoring_points_fuera = 0
         if match['teams'][1]['score'] ==  match['teams'][0]['score']:

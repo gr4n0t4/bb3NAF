@@ -59,9 +59,9 @@ def naf_pdm():
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
-    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['total'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
-    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['total'] > 14, reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']) > 14, reverse=True)
 
     return render_template('naf.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open season 4", num_entrenadores=len(num_entrenadores), page=0, total=0)
 
@@ -123,7 +123,7 @@ def naf_all(page=0):
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
-    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['total'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
     total = math.floor(len(entrenadores_array)/length)
 
