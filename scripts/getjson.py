@@ -10,6 +10,7 @@ headers = {'Accept': 'application/json'}
 
 KEY = os.getenv('KEY')
 ID = os.getenv('ID')
+root_path = os.getenv("ROOT_PATH","/home/gr4n0t4/pdm")
 
 r1 = requests.get(f"https://web.cyanide-studio.com/ws/bb3/matches/?key={KEY}&competition_id={ID}&limit=1000&start={yesterday}-23:00&end={today}-08:00", headers=headers)
 r2 = requests.get(f"https://web.cyanide-studio.com/ws/bb3/matches/?key={KEY}&competition_id={ID}&limit=1000&start={today}-08:00&end={today}-12:00", headers=headers)
@@ -24,5 +25,5 @@ for match in all_matches:
     if 'pdm' not in str(match['teams'][0]['teamname']).lower() and 'pdm' not in str(match['teams'][1]['teamname']).lower():
         continue
     matches['matches'].append(match) 
-with open(f"/home/gr4n0t4/pdm/data/{ID}-{today}.json", 'w', encoding='utf-8') as f:
+with open(f"{root_path}/data/{ID}-{today}.json", 'w', encoding='utf-8') as f:
     json.dump(matches, f, ensure_ascii=False, indent=4)

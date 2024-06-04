@@ -14,6 +14,8 @@ headers = {'Accept': 'application/json'}
 
 KEY = os.getenv('KEY')
 ID = os.getenv('ID')
+root_path = os.getenv("ROOT_PATH","/home/gr4n0t4/pdm")
+
 for i in range(delta.days + 1):
 
     day = start + datetime.timedelta(days=i)
@@ -32,5 +34,5 @@ for i in range(delta.days + 1):
         if 'pdm' not in str(match['teams'][0]['teamname']).lower() and 'pdm' not in str(match['teams'][1]['teamname']).lower():
             continue
         matches['matches'].append(match) 
-    with open(f"/home/gr4n0t4/pdm/test/{ID}-{day.date()}.json", 'w', encoding='utf-8') as f:
+    with open(f"{root_path}/test/{ID}-{day.date()}.json", 'w', encoding='utf-8') as f:
         json.dump(matches, f, ensure_ascii=False, indent=4)

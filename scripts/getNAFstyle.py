@@ -14,6 +14,8 @@ headers = {'Accept': 'application/json'}
 
 KEY = os.getenv('KEY')
 ID = os.getenv('ID')
+root_path = os.getenv("ROOT_PATH","/home/gr4n0t4/pdm")
+
 all_teams = {}
 teams = {}
 matches = {'matches' :[]}
@@ -124,7 +126,7 @@ for i in range(delta.days + 1):
         if 'pdm' in str(match['teams'][1]['teamname']).lower():
             teams[entrenador_fuera] = all_teams[entrenador_fuera]
 
-baseDir = "/home/gr4n0t4/pdm/data/"
+baseDir = f"{root_path}/data/"
 with open(f"{baseDir}/naf/partidos/{ID}.json", 'w', encoding='utf-8') as f:
         json.dump(matches, f, ensure_ascii=False, indent=4)    
 
