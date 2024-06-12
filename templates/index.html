@@ -14,14 +14,26 @@
     tr:nth-child(even) {
       background-color: #dddddd;
     }
-    .clasificado {
-        color: green;
-    }
+
     h1 {
         text-align: center;
         font-family: arial, sans-serif;
 
     }
+    tr:nth-child(even).elegible {
+      background-color: rgb(219, 219, 95);
+    }
+    .elegible {
+        background-color: yellow;
+    }
+    tr:nth-child(even).clasificado {
+        background-color: rgb(26, 109, 26);
+        color: white;
+    }
+    .clasificado {
+        background-color: green;
+        color: white;
+    }    
     </style>
 <h1>{{ titulo }}</h1>
 </br>
@@ -41,18 +53,20 @@
             <th>TD (F/C)</th>
             <th>CAS (F/C)</th>
             <th>Win Rate</th>
+            <th>Puntos</th>
         <tr>
 
         {% for entrenador in entrenadores %}
-            <tr>
-                <td>{{ loop.index }}</td>
+            <tr class={{ entrenador.clase }}>
+                <td>{{ loop.index + (page * 1000)}}</td>
                 <td>{{ entrenador.entrenador }}</td>
                 <td>{{ entrenador.nombre }}</td>
                 <td>{{ entrenador.victorias + entrenador.empates + entrenador.derrotas }}</td>
                 <td>{{ entrenador.victorias }} - {{ entrenador.empates }} - {{ entrenador.derrotas }}</td>
                 <td>{{ entrenador.td_favor }}/{{ entrenador.td_contra }}</td>
                 <td>{{ entrenador.cas_favor }}/{{ entrenador.cas_contra }}</td>
-                <td>{{ entrenador.puntos }}</td>
+                <td>{{ '%0.2f' % (100 * ((entrenador.victorias + (entrenador.empates / 2)) / (entrenador.victorias + entrenador.empates + entrenador.derrotas))) }}</td>
+                <td>{{ '%0.2f' % entrenador.puntos }}</td>
             </tr>            
         {% endfor %}
     </table>
@@ -79,7 +93,7 @@
             </tr>            
         {% endfor %}
     </table>
-    
+
 {% else %}
     <p>No hay resultados</p>
 {% endif %}
