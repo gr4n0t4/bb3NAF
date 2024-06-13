@@ -16,6 +16,37 @@ cache = Cache(app)
 
 root_path = os.getenv("ROOT_PATH","/home/gr4n0t4/pdm")
 
+
+
+@app.context_processor
+def utility_processor():
+    def get_race(id_race):
+        razas = {
+            1: "Humanos",
+            2: "Enanos",
+            3: "Skaven",
+            4: "Orcos",
+            5: "Hombres Lagarto",
+            7: "Elfos Silvanos",
+            8: "Caos",
+            9: "Elfos Oscuros",
+            10: "No muertos",
+            14: "Union Elfica",
+            17 : "Nigromanticos",
+            18: "Nurgle",
+            24: "Nobleza Imperial",
+            1000: "Orcos Negros",
+            1001: "Renegados del Caos",
+            1002: "Alianza del Viejo Mundo",
+        }
+        raza = "Desconocida"        
+        try:
+            raza = razas[id_race]
+        except:
+            pass
+        return raza
+    return dict(get_race=get_race)
+
 @app.route("/pdm")
 def naf_pdm():
     min_partidos = 10
