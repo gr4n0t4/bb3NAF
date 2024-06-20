@@ -49,11 +49,11 @@ for i in range(delta.days + 1):
     for match in all_matches:
 
 
-        entrenador_casa = match['teams'][0]['idteamlisting']
-        entrenador_fuera = match['teams'][1]['idteamlisting']        
+        entrenador_casa = match['teams'][0]['idcoach']
+        entrenador_fuera = match['teams'][1]['idcoach']        
         # Home
-        if match['teams'][0]['idteamlisting'] not in all_teams:
-            all_teams[entrenador_casa] = {'nombre': str(match['teams'][0]['teamname']),
+        if match['teams'][0]['idcoach'] not in all_teams:
+            all_teams[entrenador_casa] = {
                                                 'entrenador' : str(match['coaches'][0]['coachname']),
                                                 'victorias': 0,
                                                 'empates': 0,
@@ -63,11 +63,10 @@ for i in range(delta.days + 1):
                                                 'td_contra': 0,
                                                 'cas_favor': 0,
                                                 'cas_contra': 0,
-                                                'raza': 0
                                                 }
         # Away
-        if match['teams'][1]['idteamlisting'] not in all_teams:
-            all_teams[entrenador_fuera] = {'nombre': str(match['teams'][1]['teamname']),
+        if match['teams'][1]['idcoach'] not in all_teams:
+            all_teams[entrenador_fuera] = {
                                                 'entrenador' : str(match['coaches'][1]['coachname']),
                                                 'victorias': 0,
                                                 'empates': 0,
@@ -77,9 +76,7 @@ for i in range(delta.days + 1):
                                                 'td_contra': 0,
                                                 'cas_favor': 0,
                                                 'cas_contra': 0,
-                                                'raza': 0
                                                 }
-        all_teams[entrenador_casa]['raza'] = match['teams'][0]['idraces']
 
         all_teams[entrenador_casa]['td_favor']+=match['teams'][0]['score']
         all_teams[entrenador_casa]['td_contra']+=match['teams'][1]['score']
@@ -98,7 +95,6 @@ for i in range(delta.days + 1):
 
 
 
-        all_teams[entrenador_fuera]['raza'] = match['teams'][1]['idraces']
 
         all_teams[entrenador_fuera]['td_favor']+=match['teams'][1]['score']
         all_teams[entrenador_fuera]['td_contra']+=match['teams'][0]['score']
@@ -143,7 +139,7 @@ for i in range(delta.days + 1):
         if 'pdm' in str(match['teams'][1]['teamname']).lower():
             teams[entrenador_fuera] = all_teams[entrenador_fuera]
 
-baseDir = f"{root_path}/data/"
+baseDir = f"{root_path}/test"
 with open(f"{baseDir}/naf/partidos/{ID}.json", 'w', encoding='utf-8') as f:
         json.dump(matches, f, ensure_ascii=False, indent=4)    
 

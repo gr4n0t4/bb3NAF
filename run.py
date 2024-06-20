@@ -180,3 +180,82 @@ def naf_all(page=0):
     total = math.floor(len(entrenadores_array)/length)
 
     return render_template('naf.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open season 5", num_entrenadores=len(num_entrenadores), page=page, total=total)
+
+@app.route("/pdm/test/all")
+@cache.cached(timeout=3600)
+def naf_test_all_root():
+    return naf_test_all(page=0)
+
+@app.route("/pdm/test/all/<page>")
+@cache.cached(timeout=3600)
+def naf_test_all(page=0):
+    length = 1000
+    base_dir = f'{root_path}/test/all'
+    try:
+        page=int(page)
+    except ValueError:
+        page = 0        
+    entrenadores = {}
+    for file in os.listdir(base_dir):
+        if file.endswith('json'):
+            json_path = os.path.join(base_dir, file)
+            file = open(json_path)
+            entrenadores = json.load(file)
+            file.close()
+        
+    entrenadores_array = list(entrenadores.values())
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_favor'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
+    total = math.floor(len(entrenadores_array)/length)
+
+    return render_template('test.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open season 5", num_entrenadores=len(entrenadores_array), page=page, total=total)
+
+@app.route("/pdm/test")
+def naf_pdm_test():
+    min_partidos = 10
+    base_dir = f'{root_path}/test/naf'
+    matches = []
+    for file in os.listdir(f"{base_dir}/partidos"):
+        if file.endswith('json'):
+            json_path = os.path.join(f"{base_dir}/partidos", file)
+            file = open(json_path)
+            data = json.load(file)
+            matches += data['matches']
+            file.close()
+    matches = sorted(matches, key=lambda x: x['started'], reverse=True)
+    resultados = []
+    for match in matches:       
+        resultado = {}
+        resultado['entrenador_casa'] = str(match['teams'][0]['teamname']) + " (" + str(match['coaches'][0]['coachname'])+ ")"
+        resultado['entrenador_fuera'] =  str(match['teams'][1]['teamname']) + " (" + str(match['coaches'][1]['coachname'])+ ")"
+        resultado['td_casa'] = match['teams'][0]['score']
+        resultado['td_fuera'] = match['teams'][1]['score']
+        resultado['cas_casa'] = match['teams'][0]['inflictedcasualties']
+        resultado['cas_fuera'] = match['teams'][1]['inflictedcasualties']
+        resultados.append(resultado)
+
+    entrenadores = {}
+    for file in os.listdir(f"{base_dir}/clasificacion"):
+        if file.endswith('json'):
+            json_path = os.path.join(f"{base_dir}/clasificacion", file)
+            file = open(json_path)
+            entrenadores = json.load(file)
+            file.close()
+        
+    entrenadores_array = list(entrenadores.values())
+
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_favor'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']) >= min_partidos, reverse=True)              
+
+    return render_template('test.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open season 5", num_entrenadores=len(entrenadores_array), page=0, total=0)
