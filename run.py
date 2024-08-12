@@ -97,9 +97,9 @@ def naf_pdm():
 
 
     n_clasificados = 4 
-    if len(num_entrenadores) > 16:
+    if len(num_entrenadores) > 15:
         n_clasificados = 8
-    if len(num_entrenadores) > 32:
+    if len(num_entrenadores) > 31:
         n_clasificados = 16
     clasificados = []
     elegibles = []

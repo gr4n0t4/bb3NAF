@@ -81,8 +81,14 @@ for i in range(delta.days + 1):
         all_teams[entrenador_casa]['td_favor']+=match['teams'][0]['score']
         all_teams[entrenador_casa]['td_contra']+=match['teams'][1]['score']
 
-        all_teams[entrenador_casa]['cas_favor']+=match['teams'][0]['inflictedcasualties']
-        all_teams[entrenador_casa]['cas_contra']+=match['teams'][1]['inflictedcasualties']
+        try:
+            all_teams[entrenador_casa]['cas_favor']+=match['teams'][0]['inflictedcasualties']
+        except TypeError:
+            print("inflictedcasualties is none")
+        try:
+            all_teams[entrenador_casa]['cas_contra']+=match['teams'][1]['inflictedcasualties']
+        except TypeError:
+            print("inflictedcasualties is none")
         scoring_points_casa = 0
         if match['teams'][0]['score'] == match['teams'][1]['score']:
             all_teams[entrenador_casa]['empates']+=1
@@ -99,8 +105,14 @@ for i in range(delta.days + 1):
         all_teams[entrenador_fuera]['td_favor']+=match['teams'][1]['score']
         all_teams[entrenador_fuera]['td_contra']+=match['teams'][0]['score']
 
-        all_teams[entrenador_fuera]['cas_favor']+=match['teams'][1]['inflictedcasualties']
-        all_teams[entrenador_fuera]['cas_contra']+=match['teams'][0]['inflictedcasualties'] 
+        try:
+            all_teams[entrenador_fuera]['cas_favor']+=match['teams'][1]['inflictedcasualties']
+        except TypeError:
+            print("inflictedcasualties is none")
+        try:
+            all_teams[entrenador_fuera]['cas_contra']+=match['teams'][0]['inflictedcasualties'] 
+        except TypeError:
+            print("inflictedcasualties is none") 
         
         scoring_points_fuera = 0
         if match['teams'][1]['score'] ==  match['teams'][0]['score']:
