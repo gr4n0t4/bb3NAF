@@ -97,24 +97,41 @@ def naf_pdm():
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']) >= min_partidos, reverse=True)
 
-
-    n_clasificados = 4 
+    stunties = [6, 11]
+    n_clasificados = 3
+    n_stunty = 1 
     if len(num_entrenadores) > 15:
-        n_clasificados = 8
+        n_clasificados = 6
+        n_stunty = 2
     if len(num_entrenadores) > 31:
-        n_clasificados = 16
+        n_clasificados = 13
+        n_stunty = 3
     clasificados = []
     elegibles = []
     for entrenador in entrenadores_array:
-        if (entrenador['victorias'] + entrenador['empates'] + entrenador['derrotas']) >= min_partidos:
-            if entrenador['entrenador'] not in clasificados and n_clasificados > 0:
-                clasificados.append(entrenador['entrenador'])
-                elegibles.append(entrenador['entrenador'])
-                entrenador['clase'] = 'clasificado'
-                n_clasificados -= 1
-            elif entrenador['entrenador'] not in elegibles:
-                elegibles.append(entrenador['entrenador'])
-                entrenador['clase'] = 'elegible'
+        if entrenador['raza'] not in stunties:
+            if (entrenador['victorias'] + entrenador['empates'] + entrenador['derrotas']) >= min_partidos:
+                if entrenador['entrenador'] not in clasificados and n_clasificados > 0:
+                    clasificados.append(entrenador['entrenador'])
+                    elegibles.append(entrenador['entrenador'])
+                    entrenador['clase'] = 'clasificado'
+                    n_clasificados -= 1
+                elif entrenador['entrenador'] not in elegibles:
+                    elegibles.append(entrenador['entrenador'])
+                    entrenador['clase'] = 'elegible'
+        else:                    
+            if (entrenador['victorias'] + entrenador['empates'] + entrenador['derrotas']) >= min_partidos:
+                if n_stunty == 0 and n_clasificados > 0:
+                    n_stunty += 1
+                    n_clasificados -= 1
+                if entrenador['entrenador'] not in clasificados and n_stunty > 0:
+                    clasificados.append(entrenador['entrenador'])
+                    elegibles.append(entrenador['entrenador'])
+                    entrenador['clase'] = 'clasificado'
+                    n_stunty -= 1
+                elif entrenador['entrenador'] not in elegibles:
+                    elegibles.append(entrenador['entrenador'])
+                    entrenador['clase'] = 'elegible'                
                 
 
     return render_template('index.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open season 6", num_entrenadores=len(num_entrenadores), page=0, total=0)
