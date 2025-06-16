@@ -3,7 +3,7 @@ import datetime
 import requests
 import json
 
-input = '2025-03-11'
+input = '2025-06-10'
 format = '%Y-%m-%d'
  
 start = datetime.datetime.strptime(input, format)

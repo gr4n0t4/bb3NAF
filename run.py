@@ -39,6 +39,7 @@ def utility_processor():
             17: "Nigromanticos",
             18: "Nurgle",
             22: "Underworld",
+            23: "Khorne",
             24: "Nobleza Imperial",
             1000: "Orcos Negros",
             1001: "Renegados del Caos",
@@ -104,10 +105,10 @@ def naf_pdm():
     n_stunty = 1 
     if len(num_entrenadores) > 15:
         n_clasificados = 6
-        n_stunty = 2
+        # n_stunty = 2
     if len(num_entrenadores) > 31:
         n_clasificados = 13
-        n_stunty = 3
+        # n_stunty = 3
     clasificados = []
     elegibles = []
     for entrenador in entrenadores_array:
@@ -136,7 +137,7 @@ def naf_pdm():
                     entrenador['clase'] = 'elegible'                
                 
 
-    return render_template('index.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open Season 8", num_entrenadores=len(num_entrenadores), page=0, total=0)
+    return render_template('index.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open Season 9", num_entrenadores=len(num_entrenadores), page=0, total=0)
 
 @app.route("/pdm/csv")
 def download_csv():
@@ -200,7 +201,7 @@ def naf_all(page=0):
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
     total = math.floor(len(entrenadores_array)/length)
 
-    return render_template('naf.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open Season 8", num_entrenadores=len(num_entrenadores), page=page, total=total)
+    return render_template('naf.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open Season 9", num_entrenadores=len(num_entrenadores), page=page, total=total)
 
 @app.route("/pdm/test/all")
 @cache.cached(timeout=3600)
@@ -234,7 +235,7 @@ def naf_test_all(page=0):
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
     total = math.floor(len(entrenadores_array)/length)
 
-    return render_template('test.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open Season 8", num_entrenadores=len(entrenadores_array), page=page, total=total)
+    return render_template('test.html', resultados=[], entrenadores=entrenadores_array[page*length:][:length], titulo="Open Season 9", num_entrenadores=len(entrenadores_array), page=page, total=total)
 
 @app.route("/pdm/test")
 def naf_pdm_test():
@@ -279,4 +280,4 @@ def naf_pdm_test():
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['puntos'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']) >= min_partidos, reverse=True)              
 
-    return render_template('test.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open Season 8", num_entrenadores=len(entrenadores_array), page=0, total=0)
+    return render_template('test.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open Season 9", num_entrenadores=len(entrenadores_array), page=0, total=0)
