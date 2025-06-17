@@ -308,10 +308,9 @@ def arena():
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_favor'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
-    # entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
-    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['derrotas'])
 
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['empates'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['derrotas'])
 
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['clase'])
