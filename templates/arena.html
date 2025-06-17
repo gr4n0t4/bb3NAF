@@ -1,0 +1,81 @@
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    h1 {
+        text-align: center;
+        font-family: arial, sans-serif;
+
+    }
+    tr:nth-child(even).elegible {
+      background-color: rgb(219, 219, 95);
+    }
+    .elegible {
+        background-color: yellow;
+    }
+    tr:nth-child(even).clasificado {
+        background-color: rgb(26, 109, 26);
+        color: white;
+    }
+    .clasificado {
+        background-color: green;
+        color: white;
+    }
+    .eliminado {
+        background-color: red;
+        color: white;
+    }
+    tr:nth-child(even).eliminado {
+      background-color: rgb(219, 95, 95);
+      color: white;
+
+    }
+    </style>
+<h1>{{ titulo }}</h1>
+</br>
+</br>
+
+
+    <table>
+        <caption>Clasificacion</caption>
+
+        <tr>
+            <th>Entrenador</th>
+            <th>Equipo</th>
+            <th>Raza</th>
+            <th>Partidos Jugados</th>
+            <th>Record (V-E-D)</th>
+            <th>TD (F/C)</th>
+            <th>CAS (F/C)</th>
+
+        <tr>
+
+        {% for entrenador in entrenadores %}
+            <tr class={{ entrenador.clase }}>
+                <td>{{ entrenador.entrenador }}</td>
+                <td>{{ entrenador.nombre }}</td>
+                <td>{{ get_race(entrenador.raza) }}
+                <td>{{ entrenador.victorias + entrenador.empates + entrenador.derrotas }}</td>
+                <td>{{ entrenador.victorias }} - {{ entrenador.empates }} - {{ entrenador.derrotas }}</td>
+                <td>{{ entrenador.td_favor }}/{{ entrenador.td_contra }}</td>
+                <td>{{ entrenador.cas_favor }}/{{ entrenador.cas_contra }}</td>
+            </tr>            
+        {% endfor %}
+    </table>
+
+<div>
+    <a style="float:right" href="https://github.com/gr4n0t4/bb3NAF">Github repository</a>
+</div>

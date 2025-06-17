@@ -281,3 +281,40 @@ def naf_pdm_test():
     entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']) >= min_partidos, reverse=True)              
 
     return render_template('test.html', resultados=resultados, entrenadores=entrenadores_array, titulo="Open Season 9", num_entrenadores=len(entrenadores_array), page=0, total=0)
+
+@app.route("/pdm/arena")
+def arena():
+    base_dir = f'{root_path}/arena'
+
+
+    entrenadores = {}
+    for file in os.listdir(f"{base_dir}"):
+        if file.endswith('json'):
+            json_path = os.path.join(f"{base_dir}", file)
+            file = open(json_path)
+            entrenadores = json.load(file)
+            file.close()
+    entrenadores_array = []
+    for key, value in entrenadores.items():
+        value['clase'] = 'default'
+        if value['victorias'] > 4:
+            value['clase'] = 'elegible'
+        if value['victorias'] == 7:
+            value['clase'] = 'clasificado'
+        if value['derrotas'] == 2 or value['empates'] == 3:
+            value['clase'] = 'eliminado'
+        entrenadores_array.append(value)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_favor'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_contra'])
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['td_favor'], reverse=True)
+    # entrenadores_array=sorted(entrenadores_array, key=lambda x: (x['victorias'] + x['empates'] + x['derrotas']))
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['derrotas'])
+
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['empates'])
+
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['victorias'], reverse=True)
+    entrenadores_array=sorted(entrenadores_array, key=lambda x: x['clase'])
+
+
+    return render_template('arena.html', entrenadores=entrenadores_array, titulo="Arena Season 9")
