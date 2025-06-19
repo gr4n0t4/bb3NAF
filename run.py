@@ -296,13 +296,13 @@ def arena():
             file.close()
     entrenadores_array = []
     for key, value in entrenadores.items():
-        value['clase'] = 'default'
+        value['clase'] = 'c-default'
         if value['victorias'] > 4:
-            value['clase'] = 'elegible'
+            value['clase'] = 'b-elegible'
         if value['victorias'] == 7:
-            value['clase'] = 'clasificado'
+            value['clase'] = 'a-clasificado'
         if value['derrotas'] == 2 or value['empates'] == 3:
-            value['clase'] = 'eliminado'
+            value['clase'] = 'd-eliminado'
         entrenadores_array.append(value)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_contra'])
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_favor'], reverse=True)
