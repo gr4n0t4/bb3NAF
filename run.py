@@ -299,9 +299,9 @@ def arena():
         value['clase'] = 'c-default'
         if value['victorias'] > 4:
             value['clase'] = 'b-elegible'
-        if value['victorias'] == 7:
+        if value['victorias'] > 6:
             value['clase'] = 'a-clasificado'
-        if value['derrotas'] == 2 or value['empates'] == 3:
+        if value['derrotas'] > 1 or value['empates'] > 2:
             value['clase'] = 'd-eliminado'
         entrenadores_array.append(value)
     entrenadores_array=sorted(entrenadores_array, key=lambda x: x['cas_contra'])
