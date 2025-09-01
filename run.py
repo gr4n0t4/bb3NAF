@@ -104,10 +104,10 @@ def naf_pdm():
     n_clasificados = 3
     n_stunty = 1 
     if len(num_entrenadores) > 15:
-        n_clasificados = 6
+        n_clasificados = 7
         # n_stunty = 2
     if len(num_entrenadores) > 31:
-        n_clasificados = 13
+        n_clasificados = 15
         # n_stunty = 3
     clasificados = []
     elegibles = []
