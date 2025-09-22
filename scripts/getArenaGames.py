@@ -8,8 +8,9 @@ import datetime
 import requests
 import json
 import uuid
+import sys
 
-input = '2025-06-10'
+input = sys.argv[1] if len(sys.argv) > 1 else input("Enter start date (YYYY-MM-DD): ")
 format = '%Y-%m-%d'
  
 start = datetime.datetime.strptime(input, format)
