@@ -143,11 +143,17 @@ for i in range(delta.days + 1):
         win_prob_fuera = 1/(1 + pow(10,(all_teams[entrenador_casa]['puntos']-all_teams[entrenador_fuera]['puntos'])/150))
         puntos_fuera = all_teams[entrenador_fuera]['puntos'] + (12 * (scoring_points_fuera - win_prob_fuera))
 
+        before_casa = all_teams[entrenador_casa]['puntos']
+        before_fuera = all_teams[entrenador_fuera]['puntos']
         all_teams[entrenador_casa]['puntos'] = puntos_casa
         all_teams[entrenador_fuera]['puntos'] = puntos_fuera
 
         if 'pdm' not in str(match['teams'][0]['teamname']).lower() and 'pdm' not in str(match['teams'][1]['teamname']).lower():
             continue
+        match['teams'][0]['puntos_antes'] = before_casa
+        match['teams'][0]['puntos_despues'] = puntos_casa
+        match['teams'][1]['puntos_antes'] = before_fuera
+        match['teams'][1]['puntos_despues'] = puntos_fuera
         matches['matches'].append(match)
         if 'pdm' in str(match['teams'][0]['teamname']).lower():
             teams[entrenador_casa] = all_teams[entrenador_casa]

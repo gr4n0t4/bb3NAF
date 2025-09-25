@@ -76,6 +76,9 @@ def naf_pdm():
         resultado['td_fuera'] = match['teams'][1]['score']
         resultado['cas_casa'] = match['teams'][0]['inflictedcasualties']
         resultado['cas_fuera'] = match['teams'][1]['inflictedcasualties']
+        resultado['puntos_antes_casa'] = match['teams'][0].get('puntos_antes', 150)
+        resultado['puntos_antes_fuera'] = match['teams'][1].get('puntos_antes', 150)        
+        resultado['diferencia'] = match['teams'][0].get('puntos_despues', 0) - resultado['puntos_antes_casa']
         resultados.append(resultado)
 
     entrenadores = {}

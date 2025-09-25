@@ -83,6 +83,9 @@
             <th>TD Casa (CAS)</th>
             <th>TD Fuera (CAS)</th>
             <th>Entrenador Fuera</th>
+            <th>Puntos Antes Casa</th>
+            <th>Puntos Antes Fuera</th>
+            <th>Cambio</th>
         <tr>
 
         {% for resultado in resultados %}
@@ -91,6 +94,9 @@
                 <td><b>{{ resultado.td_casa }}</b> ({{ resultado.cas_casa }})</td>
                 <td><b>{{ resultado.td_fuera }}</b> ({{ resultado.cas_fuera }})</td>
                 <td>{{ resultado.entrenador_fuera }}</td>
+                <td>{{ '%0.2f' % resultado.puntos_antes_casa }}</td>
+                <td>{{ '%0.2f' % resultado.puntos_antes_fuera }}</td>
+                <td>{{ '%0.2f' % resultado.diferencia }}</td>
                 
             </tr>            
         {% endfor %}
